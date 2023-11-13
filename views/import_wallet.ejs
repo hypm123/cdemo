@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Wallet</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: start;
+            height: 100vh; /* Full viewport height */
+            background: #fff; /* White background */
+        }
+        .container {
+            width: 90%;
+            max-width: 500px;
+            margin-top: 50px;
+        }
+        .header {
+            text-align: center;
+            font-size: 24px;
+            margin: 1px 0 20px 0;
+        }
+        .input-field {
+            margin: 1px 0 20px 0;
+            padding: 12px; /* Increased padding for a larger input field */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            height: 50px; /* Increased height for the input field */
+        }
+        .input-field1 {
+            margin: 1px 0 20px 0;
+            padding: 12px; /* Increased padding for a larger input field */
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            width: 100%;
+            height: 20px; /* Increased height for the input field */
+        }
+        .button {
+            background-color: #f0f0f0;
+            color: #333;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 16px; /* Added margin-top for spacing */
+        }
+        .button:hover {
+            background-color: #e0e0e0;
+        }
+        .input-field, .input-field1 {
+            margin: 10px 0;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            width: 100%;
+        }
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">Add Wallet</div>
+        <!-- In your add_wallet.ejs file -->
+        <form action="/import-wallet" method="post" onsubmit="return validateForm()">
+            <!-- Error Message Display -->
+            <% if (typeof error !== 'undefined') { %>
+                <div style="color: red;"><%= error %></div>
+            <% } %>
+                
+            <div id="form-error" style="color: red;"></div>
+            
+            <label for="Input">Input</label>
+            <input type="text" name="input" class="input-field" placeholder="Scan or enter your mnemonic, private key, or keystore">
+            <div id="input-error" class="error-message"></div>
+
+            <label for="Name">Name</label>
+            <input type="text" name="name" class="input-field1" placeholder="Penny-1" maxlength="30">
+            <div id="name-error" class="error-message"></div>
+
+            <label for="Pass">Set a Password</label>
+            <input type="password" name="pass" class="input-field1" placeholder="Enter a password">
+            
+            <label for="Re_pass">Reenter Password</label>
+            <input type="password" name="re_pass" class="input-field1" placeholder="Enter your password again">
+            <div id="password-error" class="error-message"></div>
+
+            <button type="submit" class="button">Next Step</button>
+        </form>
+
+    </div>
+    <div id="loading" style="display: none;">
+        <img src="/png/loading.gif" alt="Loading" width="20" height="20">
+    </div>
+    <script>
+        function validateForm() {
+            var input = document.getElementsByName("input")[0].value;
+            var name = document.getElementsByName("name")[0].value;
+            var pass = document.getElementsByName("pass")[0].value;
+            var re_pass = document.getElementsByName("re_pass")[0].value;
+            var formError = document.getElementById("form-error");
+            var inputError = document.getElementById("input-error");
+            var nameError = document.getElementById("name-error");
+            var passwordError = document.getElementById("password-error");
+            var loading = document.getElementById("loading"); // Thêm dòng này
+            
+            formError.innerHTML = "";
+            inputError.innerHTML = "";
+            nameError.innerHTML = "";
+            passwordError.innerHTML = "";
+
+            // Ẩn nút "Next Step" và hiển thị biểu tượng loading
+            var nextStepButton = document.querySelector('button[type="submit"]');
+            nextStepButton.style.display = 'none';
+            loading.style.display = 'block'; // Hiển thị biểu tượng loading
+
+            if (!input || !name || !pass || !re_pass) {
+                formError.innerHTML = "Please fill in all fields.";
+                // Đảm bảo biểu tượng loading và nút "Next Step" đều được ẩn đi nếu có lỗi
+                nextStepButton.style.display = 'block';
+                loading.style.display = 'none';
+                return false;
+            }
+
+            if (name.length > 30) {
+                nameError.innerHTML = "Name should not exceed 30 characters.";
+                nextStepButton.style.display = 'block';
+                loading.style.display = 'none';
+                return false;
+            }
+
+            if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(pass)) {
+                passwordError.innerHTML = "Password must contain at least 8 characters with at least one lowercase letter, one uppercase letter, and one number.";
+                nextStepButton.style.display = 'block';
+                loading.style.display = 'none';
+                return false;
+            }
+
+            if (pass !== re_pass) {
+                passwordError.innerHTML = "Passwords do not match.";
+                nextStepButton.style.display = 'block';
+                loading.style.display = 'none';
+                return false;
+            }
+
+            return true;
+        }
+
+    </script>
+</body>
+</html>

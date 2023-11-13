@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wallet Interface</title>
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .button-group.a {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        margin-top: 0px;
+    }
+    .button-group.b {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 100px;
+        margin-bottom: 30px;
+    }
+    .button.address, .button.address-copy {
+            background-color: transparent; /* Đặt màu nền trong suốt */
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Căn nội dung sang bên trái */
+        }
+
+    .button {
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .button-group {
+        display: flex;
+        align-items: center;
+    }
+    .button.name span {
+        margin-right: 1px; /* Khoảng cách giữa chữ và ảnh */
+    }
+    .button.name, .button.import {
+        background-color: transparent; /* Đặt màu nền trong suốt */
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* Căn nội dung sang bên trái */
+    }
+    .currency-button.address {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        /* Các thuộc tính khác cho nút */
+    }
+
+
+    .currency-symbol.import1 {
+        width: auto; /* Đặt chiều rộng ảnh */
+        height: 25px; /* Đảm bảo tỷ lệ khung hình không bị thay đổi */
+    }
+    .currency-symbol.name {
+        width: 15px; /* Đặt chiều rộng ảnh */
+        height: auto; /* Đảm bảo tỷ lệ khung hình không bị thay đổi */
+    }
+
+    .currency-symbol.import {
+        width: 30px; /* Đặt chiều rộng ảnh */
+        height: auto; /* Đảm bảo tỷ lệ khung hình không bị thay đổi */
+    }
+    .currency-symbol.address-copy {
+        width: 20px; /* Đặt chiều rộng ảnh */
+        height: auto; /* Đảm bảo tỷ lệ khung hình không bị thay đổi */
+    }
+
+
+    .Hot_Wallet-text {
+        font-size: 18px; /* Đặt kích thước chữ */
+        font-weight: bold; /* Đặt chữ in đậm */
+        color: black; /* Đặt màu chữ là đen */
+        margin-right: auto; /* Đặt margin-right thành auto để chữ nằm sát bên trái */
+    }
+
+    .name-text {
+        font-size: 23px; /* Đặt kích thước chữ */
+        font-weight: bold; /* Đặt chữ in đậm */
+        color: black; /* Đặt màu chữ là đen */
+        margin-right: auto; /* Đặt margin-right thành auto để chữ nằm sát bên trái */
+    }
+
+    .wallet-container {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    /*  */
+    .balance-amount {
+        font-size: 28px;
+        font-weight: bold;
+    }
+    
+
+    .address-text {
+        font-size: auto; /* Đặt kích thước chữ */
+        font-weight: normal; /* Đặt chữ in đậm */
+        color: black; /* Đặt màu chữ là đen */
+        margin-right: auto; /* Đặt margin-right thành auto để chữ nằm sát bên trái */
+    }
+
+
+    .currency {
+        display: block; /* Hoặc flex nếu bạn muốn giữ các items cạnh nhau */
+        margin: 0; /* Loại bỏ margin mặc định */
+        padding: 0; /* Loại bỏ padding mặc định */
+        list-style-type: none; /* Loại bỏ bullet points */
+    }
+
+
+
+    .currency-button {
+        display: flex;
+        justify-content: start; /* Đặt nội dung sang trái */
+        align-items: center; /* Căn giữa nội dung theo chiều dọc */
+        width: 100%;
+        border: none;
+        background: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        outline: none;
+    }
+
+
+.currency-symbol {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px; /* Tạo khoảng cách giữa logo và chữ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: white;
+  }
+
+  .currency-name.namewl {
+    margin-right: auto; /* Đẩy tất cả nội dung còn lại sang phải */
+    font-size: 1em; /* Tăng kích thước font */
+    font-weight: bold; /* Làm đậm chữ */
+    }
+.currency-name.address {
+        margin-top: 20px;
+        margin-right: auto; /* Đẩy tất cả nội dung còn lại sang phải */
+        font-size: 0.7em; /* Tăng kích thước font */
+        font-weight: normal; /* Làm đậm chữ */
+    }
+.currency-name {
+  margin-right: auto; /* Đẩy tất cả nội dung còn lại sang phải */
+  font-size: 1.6em; /* Tăng kích thước font */
+  font-weight: bold; /* Làm đậm chữ */
+}
+.currency-name1 {
+  margin-right: auto; /* Đẩy tất cả nội dung còn lại sang phải */
+  font-size: 1.5em; /* Tăng kích thước font */
+  font-weight: normal; /* Làm đậm chữ */
+}
+
+
+.currency-value {
+  font-size: 1.5em; /* Tăng kích thước font */
+  font-weight: bold; /* Làm đậm chữ */
+}
+
+  .send { background-color: #007bff; }
+  .Receive { background-color: #007bff; }
+
+  .currency-list {
+    list-style: none;
+    padding: 0;
+  }
+  .Logout {
+    list-style: none;
+    padding: 0;
+  }
+  ul.Setting {
+    margin-top: 60px; /* Space above the ul */
+    margin-bottom: 30px; /* Space below the ul */
+    }
+  .Setting {
+    list-style: none;
+    padding: 0;
+  }
+  ul.Logout {
+    margin-top: 30px; /* Space above the ul */
+    margin-bottom: 30px; /* Space below the ul */
+    }
+  .currency {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+  }
+
+
+</style>
+</head>
+<body>
+    <div class="button-group a">
+        <button class="button back" onclick="location.href='/home';">
+            <img src="/png/back1.png" alt="name Symbol" class="currency-symbol back" />
+        </button>
+        <span class="name-text">Select Wallet</span>
+        
+        <button class="button import">
+            <img src="/png/home/import.png" alt="import Symbol" class="currency-symbol import" />
+        </button>
+    </div>
+    <div class="button-group b>
+        <button class="button import">
+            <img src="\png\import_wallet\wallet.png" alt="import Symbol" class="currency-symbol import1" />
+        </button>
+        <span class="Hot_Wallet-text">All Wallets</span>
+    </div>
+
+    <ul class="currency-list">
+        <% for (let i = 0; i < renderData.length; i++) { %>
+            <li class="currency">
+                <button class="currency-button address">
+                    <span class="namewl"><%= renderData[i].name_wl %></span>
+                    <div class="balance-amount">$<%= renderData[i].USDBalance %></div>
+                    <span class="address" data-address="<%= renderData[i].address %>"><%= renderData[i].address %></span>
+                    <!-- Sửa đoạn onclick để truyền 'this' và địa chỉ ví -->
+                    <button class="button address-copy" onclick="copyAddress(this, '<%= renderData[i].address %>')">
+                        <img src="/png/copy.png" alt="address-copy Symbol" class="currency-symbol address-copy" id="copyImage" />
+                    </button>                    
+                    <div class="copiedMessage" style="display: none;">Copied</div> 
+                </button>
+            </li>
+        <% } %>                  
+    </ul>
+    <script>
+        // JavaScript code could go here to handle button clicks or update balances.
+        function copyAddress(buttonElement, address) {
+            const tempInput = document.createElement('input');
+            document.body.appendChild(tempInput);
+            tempInput.value = address;
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            const copiedMessage = buttonElement.parentElement.querySelector('.copiedMessage');
+            copiedMessage.style.display = 'block'; // Hiển thị thông báo "Copied"
+
+            setTimeout(function() {
+                copiedMessage.style.display = 'none'; // Ẩn thông báo sau 1 giây
+            }, 1000); // 1000 milliseconds = 1 giây
+        }
+
+
+
+    </script>
+
+</body>
+</html>

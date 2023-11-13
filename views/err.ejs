@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 100px;
+        }
+
+        h1 {
+            color: red;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 23px;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 10px; /* Thêm khoảng cách giữa các nút */
+        }
+    </style>
+</head>
+<body>
+    <h1>Error</h1>
+    <div class="error-message">
+        <!-- Hiển thị thông báo lỗi ở đây -->
+        <%= errorMessage %>
+    </div>
+    <a href="<%= back %>" class="button">Back</a> <!-- Thêm dấu nháy kép vào giữa <%= back %> -->
+    <a href="/home" class="button">Home</a>
+</body>
+</html>
